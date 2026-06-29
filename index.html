@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="hu" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Molnár Borpince – Bölcske | Tolnai borvidék</title>
+  <meta name="description" content="Molnár Borpince – családi borászat a Tolnai borvidéken, Bölcskén. Borok, borkóstolók és pincelátogatás." />
+
+  <!-- Favicon / címsáv-ikon (a logó jeléből) -->
+  <link rel="icon" href="assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+
+  <!-- Betűtípusok: Cormorant Garamond (címek) + Jost (szövegtörzs) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (CDN) + egyedi, zöld–krém prémium színpaletta -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: { DEFAULT: "#2E5E3A", light: "#4A7C59", dark: "#234232", deep: "#15281C" },
+            sand:   { 50: "#FAF7F0", 100: "#F3EEE2", 200: "#E7DECB", 300: "#D8CBB0" },
+            gold:   { DEFAULT: "#B8923A", light: "#C9A24B", dark: "#9A7A2E" },
+            ink:    { DEFAULT: "#23231F", soft: "#46443D", muted: "#857F73" },
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', "Georgia", "serif"],
+            sans: ["Jost", "system-ui", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Egyedi stílusok -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Hero kép előtöltése (csere: css/style.css --hero-image) -->
+  <link rel="preload" as="image" href="assets/hero-vineyard.jpg" />
+</head>
+
+<body class="bg-sand-50 font-sans text-ink antialiased">
+
+  <!-- ============================ NAVIGÁCIÓ ============================ -->
+  <header id="site-nav" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 lg:px-8">
+      <a href="#fooldal" class="flex items-center" aria-label="Molnár Borpince">
+        <img src="assets/logo-gold.png" alt="Molnár Borpince" class="nav-logo" width="520" height="358" />
+      </a>
+
+      <div class="flex items-center gap-4 lg:gap-7">
+        <!-- Asztali menü -->
+        <ul class="hidden items-center gap-8 text-sm font-medium uppercase tracking-widest md:flex nav-links">
+          <li><a href="#fooldal" class="nav-link" data-i18n="nav.home">Főoldal</a></li>
+          <li><a href="#rolunk" class="nav-link" data-i18n="nav.about">Rólunk</a></li>
+          <li><a href="#boraink" class="nav-link" data-i18n="nav.wines">Boraink</a></li>
+          <li><a href="#kapcsolat" class="nav-link" data-i18n="nav.contact">Kapcsolat</a></li>
+          <li>
+            <a href="#foglalas" class="rounded-full bg-forest px-5 py-2.5 text-sand-50 transition hover:bg-forest-light" data-i18n="nav.booking">
+              Kóstoló foglalás
+            </a>
+          </li>
+        </ul>
+
+        <!-- Nyelvváltó (földgömb) -->
+        <div class="lang-switcher relative" id="lang-switcher">
+          <button id="lang-toggle" class="lang-btn" aria-haspopup="true" aria-expanded="false" data-i18n-aria="lang.aria">
+            <svg class="lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18M12 3c2.6 2.5 4 5.7 4 9s-1.4 6.5-4 9c-2.6-2.5-4-5.7-4-9s1.4-6.5 4-9Z" />
+            </svg>
+            <span id="lang-current" class="lang-code">HU</span>
+            <svg class="lang-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+          <!-- A nyelvi listát a script.js tölti fel a LANGS alapján -->
+          <ul id="lang-menu" class="lang-menu hidden" role="menu"></ul>
+        </div>
+
+        <!-- Mobil hamburger -->
+        <button id="menu-toggle" class="md:hidden nav-burger" aria-expanded="false" aria-controls="mobile-menu" data-i18n-aria="nav.menu">
+          <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path class="burger-open" d="M4 7h16M4 12h16M4 17h16" />
+            <path class="burger-close hidden" d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobil menü panel -->
+    <div id="mobile-menu" class="hidden border-t border-sand-200 bg-sand-50/95 backdrop-blur md:hidden">
+      <ul class="flex flex-col px-6 py-4 text-sm font-medium uppercase tracking-widest text-ink">
+        <li><a href="#fooldal" class="mobile-link block py-3" data-i18n="nav.home">Főoldal</a></li>
+        <li><a href="#rolunk" class="mobile-link block py-3" data-i18n="nav.about">Rólunk</a></li>
+        <li><a href="#boraink" class="mobile-link block py-3" data-i18n="nav.wines">Boraink</a></li>
+        <li><a href="#kapcsolat" class="mobile-link block py-3" data-i18n="nav.contact">Kapcsolat</a></li>
+        <li class="py-3">
+          <a href="#foglalas" class="mobile-link inline-block rounded-full bg-forest px-5 py-2.5 text-sand-50" data-i18n="nav.booking">Kóstoló foglalás</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ============================ FŐOLDAL / HERO ============================ -->
+  <section id="fooldal" class="hero relative flex min-h-screen items-center justify-center overflow-hidden text-sand-50">
+    <svg class="hero-hills" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="#234232" d="M0,180 C240,90 480,250 740,190 C980,135 1220,235 1440,150 L1440,360 L0,360 Z" />
+      <path class="hill-rows" d="M70,240 C300,170 540,275 790,225 M40,285 C320,215 600,310 900,255 M120,330 C420,265 760,350 1100,295"
+            stroke="#4A7C59" stroke-width="2" fill="none" stroke-dasharray="14 10" opacity="0.55" />
+      <path fill="#15281C" d="M0,260 C320,190 620,320 940,250 C1140,208 1320,290 1440,240 L1440,360 L0,360 Z" />
+    </svg>
+
+    <div class="hero-anim relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <h1 class="mx-auto mb-8 max-w-md">
+        <img src="assets/logo-cream.png" alt="Molnár Borpince" class="mx-auto w-64 sm:w-80" width="520" height="358" />
+      </h1>
+      <p class="mb-6 text-xs font-medium uppercase tracking-[0.45em] text-sand-300" data-i18n="hero.kicker">Bölcske · Tolnai borvidék</p>
+      <div class="ornament mx-auto my-7" aria-hidden="true"></div>
+      <p class="mx-auto max-w-xl text-lg font-light leading-relaxed text-sand-100 sm:text-xl" data-i18n="hero.motto">
+        Ahol a tolnai löszdombok napfénye palackba zárva érik.<br />
+        Egy korty Bölcske — egy korty otthon.
+      </p>
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a href="#boraink" class="w-full rounded-full bg-sand-50 px-8 py-3.5 text-sm font-semibold uppercase tracking-widest text-forest transition hover:bg-sand-200 sm:w-auto" data-i18n="hero.cta1">
+          Boraink felfedezése
+        </a>
+        <a href="#foglalas" class="w-full rounded-full border border-sand-50/60 px-8 py-3.5 text-sm font-semibold uppercase tracking-widest text-sand-50 transition hover:border-sand-50 hover:bg-sand-50/10 sm:w-auto" data-i18n="hero.cta2">
+          Borkóstoló foglalása
+        </a>
+      </div>
+    </div>
+
+    <a href="#rolunk" class="scroll-hint absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-sand-200" data-i18n-aria="hero.scroll" aria-label="Görgess tovább">
+      <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
+    </a>
+  </section>
+
+  <!-- ============================ RÓLUNK ============================ -->
+  <section id="rolunk" class="py-24 lg:py-32">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8">
+      <div class="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+
+        <div class="reveal">
+          <p class="section-label" data-i18n="about.label">Rólunk</p>
+          <h2 class="section-title" data-i18n="about.title">Egy ékszerdoboz<br />a löszdombok ölelésében</h2>
+          <div class="ornament my-7" aria-hidden="true"></div>
+          <div class="space-y-5 leading-relaxed text-ink-soft">
+            <p data-i18n="about.p1">
+              <strong class="font-medium text-ink">Molnár Attila</strong> borász három évtizede
+              műveli családja szőlőit a bölcskei dombokon. Számára a borászat nem mesterség,
+              hanem örökség: minden tőke, minden hordó és minden palack egy-egy fejezete
+              a család történetének.
+            </p>
+            <p data-i18n="about.p2">
+              A pince igazi <em class="font-serif text-forest">ékszerdoboz</em>: a boltíves falakban
+              a téglák ugyanolyan precíz gondossággal simulnak egymásra, ahogyan odakint
+              a szőlőültetvények sorai követik egymást a domboldalon. Ami bent a kéz munkájának
+              rendje, az kint a természet és az ember közös ritmusa — ez a kettős harmónia
+              kóstolható meg minden pohár borunkban.
+            </p>
+            <p data-i18n="about.p3">
+              Kis tételben, kézi szürettel és türelmes hordós érleléssel készítjük borainkat,
+              mert hisszük: az igazán nagy borokhoz nem nagy mennyiség kell, hanem nagy odafigyelés.
+            </p>
+          </div>
+
+          <dl class="mt-10 grid grid-cols-3 gap-6 border-t border-sand-300 pt-8">
+            <div>
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 3c-1.6 2.7-1.6 15.3 0 18M17 3c1.6 2.7 1.6 15.3 0 18M7 3h10M7 21h10M5.9 9h12.2M5.9 15h12.2" />
+              </svg>
+              <dt class="text-xs uppercase tracking-widest text-ink-muted" data-i18n="about.stat1L">Tapasztalat</dt>
+              <dd class="mt-1 font-serif text-3xl font-semibold text-forest" data-i18n="about.stat1V">30+ év</dd>
+            </div>
+            <div>
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 18c3-2.6 6-2.6 9 0s6 2.6 9 0M3 12c3-2.6 6-2.6 9 0s6 2.6 9 0M3 6c3-2.6 6-2.6 9 0s6 2.6 9 0" />
+              </svg>
+              <dt class="text-xs uppercase tracking-widest text-ink-muted" data-i18n="about.stat2L">Szőlőterület</dt>
+              <dd class="mt-1 font-serif text-3xl font-semibold text-forest" data-i18n="about.stat2V">6 ha</dd>
+            </div>
+            <div>
+              <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="10" r="2.5" /><circle cx="9" cy="14.5" r="2.5" /><circle cx="15" cy="14.5" r="2.5" /><circle cx="12" cy="19" r="2.5" />
+                <path d="M12 7.5q1-3.5 4.5-4" />
+              </svg>
+              <dt class="text-xs uppercase tracking-widest text-ink-muted" data-i18n="about.stat3L">Szüret</dt>
+              <dd class="mt-1 font-serif text-3xl font-semibold text-forest" data-i18n="about.stat3V">100% kézi</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="reveal">
+          <figure class="about-figure">
+            <img class="about-figure__main" src="assets/about-rows.jpg"
+                 alt="Rendezett szőlősorok érett fürtökkel a bölcskei dombokon" loading="lazy" decoding="async" />
+            <img class="about-figure__inset" src="assets/about-cellar.jpg"
+                 alt="Tölgyfahordók a boltíves téglapincében – a Molnár Borpince ékszerdoboza" loading="lazy" decoding="async" />
+            <figcaption class="about-figure__quote">
+              <span data-i18n="about.quote">„Minden tégla a helyén — ahogy kint minden szőlősor.”</span>
+              <span data-i18n="about.quoteBy">Molnár Attila, borász</span>
+            </figcaption>
+          </figure>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ GALÉRIA ============================ -->
+  <section id="galeria" class="bg-sand-100 py-20 lg:py-24">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8">
+      <div class="reveal mx-auto max-w-2xl text-center">
+        <p class="section-label" data-i18n="gallery.label">Galéria</p>
+        <h2 class="section-title" data-i18n="gallery.title">A szőlőtől a pohárig</h2>
+        <div class="ornament mx-auto my-7" aria-hidden="true"></div>
+        <p class="leading-relaxed text-ink-soft" data-i18n="gallery.text">
+          Pillanatképek a bölcskei dűlőkről — a rendezett sorok, az érő fürtök
+          és a nyári fény, amely minden palackunkban visszaköszön.
+        </p>
+      </div>
+
+      <div class="reveal mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
+        <figure class="gallery-tile"><img src="assets/gallery-g1.jpg" alt="Szőlősorok a végtelenbe futva" loading="lazy" decoding="async" /></figure>
+        <figure class="gallery-tile"><img src="assets/gallery-g2.jpg" alt="Dűlőút a szőlőültetvények között" loading="lazy" decoding="async" /></figure>
+        <figure class="gallery-tile"><img src="assets/gallery-g3.jpg" alt="A bölcskei szőlőbirtok panorámája" loading="lazy" decoding="async" /></figure>
+        <figure class="gallery-tile"><img src="assets/gallery-g4.jpg" alt="Érett kékszőlő-fürtök a tőkén" loading="lazy" decoding="async" /></figure>
+        <figure class="gallery-tile"><img src="assets/gallery-g5.jpg" alt="Zöld szőlőfürtök a napsütésben" loading="lazy" decoding="async" /></figure>
+        <figure class="gallery-tile"><img src="assets/gallery-g6.jpg" alt="Lombos szőlősorok kék éggel" loading="lazy" decoding="async" /></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ BORAINK ============================ -->
+  <section id="boraink" class="relative overflow-hidden py-24 lg:py-32">
+    <svg class="pointer-events-none absolute -right-20 -top-20 h-96 w-96 text-forest opacity-[0.05]" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
+      <circle cx="20" cy="14" r="4.5" /><circle cx="13" cy="20" r="4.5" /><circle cx="27" cy="20" r="4.5" />
+      <circle cx="20" cy="26" r="4.5" /><circle cx="20" cy="34" r="3.5" />
+      <path d="M20 9C20 5.5 22.5 3 26 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none" />
+    </svg>
+
+    <div class="relative mx-auto max-w-6xl px-6 lg:px-8">
+      <div class="reveal mx-auto max-w-2xl text-center">
+        <p class="section-label" data-i18n="wines.label">Borkatalógus</p>
+        <h2 class="section-title" data-i18n="wines.title">Boraink</h2>
+        <div class="ornament mx-auto my-7" aria-hidden="true"></div>
+        <p class="leading-relaxed text-ink-soft" data-i18n="wines.text">
+          Minden palackunk a bölcskei dombok karakterét őrzi — kézi szürettel,
+          kis tételben, nagy gondossággal.
+        </p>
+      </div>
+
+      <!-- Szűrőgombok: data-filter = kanonikus kulcs, data-i18n = felirat -->
+      <div id="wine-filters" class="reveal mt-12 flex flex-wrap items-center justify-center gap-3">
+        <button data-filter="mind" class="filter-btn is-active" data-i18n="filter.all">Mind</button>
+        <button data-filter="Vörösbor" class="filter-btn" data-i18n="filter.red">Vörösborok</button>
+        <button data-filter="Fehérbor" class="filter-btn" data-i18n="filter.white">Fehérborok</button>
+        <button data-filter="Rozé" class="filter-btn" data-i18n="filter.rose">Rozék</button>
+      </div>
+
+      <div id="wine-grid" class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </div>
+  </section>
+
+  <!-- ============================ IDÉZET-SÁV ============================ -->
+  <section class="quote-band relative py-24 text-center text-sand-50 lg:py-28" aria-label="Idézet">
+    <div class="reveal mx-auto max-w-3xl px-6">
+      <svg class="mx-auto h-12 w-12 text-gold-light" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
+        <circle cx="20" cy="14" r="4.5" /><circle cx="13" cy="20" r="4.5" /><circle cx="27" cy="20" r="4.5" />
+        <circle cx="20" cy="26" r="4.5" /><circle cx="20" cy="34" r="3.5" />
+        <path d="M20 9C20 5.5 22.5 3 26 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none" />
+      </svg>
+      <p class="mt-6 font-serif text-2xl italic leading-relaxed sm:text-3xl" data-i18n="band.quote">
+        „A bor a táj lelke palackba zárva —<br class="hidden sm:block" />
+        mi csak vigyázunk rá, míg a pohárba ér.”
+      </p>
+      <p class="mt-6 text-xs font-medium uppercase tracking-[0.4em] text-sand-300" data-i18n="band.by">Molnár Borpince · Bölcske</p>
+    </div>
+  </section>
+
+  <!-- ============================ FOGLALÁS ============================ -->
+  <section id="foglalas" class="relative overflow-hidden bg-forest-deep py-24 text-sand-50 lg:py-32">
+    <svg class="pointer-events-none absolute -bottom-24 -left-24 h-[28rem] w-[28rem] text-sand-50 opacity-[0.04]" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
+      <circle cx="20" cy="14" r="4.5" /><circle cx="13" cy="20" r="4.5" /><circle cx="27" cy="20" r="4.5" />
+      <circle cx="20" cy="26" r="4.5" /><circle cx="20" cy="34" r="3.5" />
+      <path d="M20 9C20 5.5 22.5 3 26 2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none" />
+    </svg>
+
+    <div class="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
+      <div class="grid items-start gap-14 lg:grid-cols-5 lg:gap-20">
+
+        <div class="reveal lg:col-span-2">
+          <p class="section-label !text-gold-light" data-i18n="booking.label">Élmény</p>
+          <h2 class="section-title !text-sand-50" data-i18n="booking.title">Borkóstoló<br />foglalás</h2>
+          <div class="ornament my-7" aria-hidden="true"></div>
+          <p class="leading-relaxed text-sand-200" data-i18n="booking.intro">
+            Fedezze fel borainkat ott, ahol születnek: a százéves boltíves pincében,
+            gyertyafénynél, házi sajtfalatokkal kísérve. A kóstolókat Molnár Attila
+            személyesen vezeti.
+          </p>
+          <ul class="mt-8 space-y-4 text-sm text-sand-200">
+            <li class="flex items-center gap-3">
+              <span class="perk-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M8 3h8c0 4.2-1.2 7-4 7s-4-2.8-4-7Z" /><path d="M12 10v8M9 21h6" />
+                </svg>
+              </span>
+              <span data-i18n="booking.perk1">5 tételes vezetett kóstoló (kb. 3 óra)</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="perk-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 17.5 19.5 9a3 3 0 0 1 1.5 2.6v6.9H3v-1Z" /><circle cx="8.5" cy="15.2" r="1.1" /><circle cx="14" cy="13.4" r="1.1" />
+                </svg>
+              </span>
+              <span data-i18n="booking.perk2">Házi sajt- és sonkafalatok</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="perk-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 21V11a7 7 0 0 1 14 0v10" /><path d="M3 21h18" />
+                </svg>
+              </span>
+              <span data-i18n="booking.perk3">Pincelátogatás és történetmesélés</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal lg:col-span-3">
+          <form id="booking-form" class="rounded-3xl bg-sand-50 p-7 text-ink shadow-2xl sm:p-10" novalidate>
+            <h3 class="font-serif text-3xl font-semibold" data-i18n="form.title">Foglalja le időpontját</h3>
+            <p class="mt-1 text-sm text-ink-muted" data-i18n="form.required">A csillaggal jelölt mezők kitöltése kötelező.</p>
+
+            <div class="mt-7 grid gap-5 sm:grid-cols-2">
+              <div class="field sm:col-span-2">
+                <label for="nev" class="field-label" data-i18n="form.name">Név *</label>
+                <input type="text" id="nev" name="nev" class="field-input" data-i18n-ph="form.namePh" placeholder="Kovács Anna" autocomplete="name" />
+                <p class="error-msg" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="email" class="field-label" data-i18n="form.email">E-mail cím *</label>
+                <input type="email" id="email" name="email" class="field-input" data-i18n-ph="form.emailPh" placeholder="anna@email.hu" autocomplete="email" />
+                <p class="error-msg" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="telefon" class="field-label" data-i18n="form.phone">Telefonszám *</label>
+                <input type="tel" id="telefon" name="telefon" class="field-input" data-i18n-ph="form.phonePh" placeholder="+36 30 123 4567" autocomplete="tel" />
+                <p class="error-msg" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="vendegek" class="field-label" data-i18n="form.guests">Vendégek száma *</label>
+                <!-- Az opciókat a script.js tölti fel a nyelvnek megfelelően -->
+                <select id="vendegek" name="vendegek" class="field-input field-select"></select>
+                <p class="error-msg" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="datum" class="field-label" data-i18n="form.date">Dátum *</label>
+                <input type="date" id="datum" name="datum" class="field-input" />
+                <p class="error-msg" role="alert"></p>
+              </div>
+
+              <div class="field sm:col-span-2">
+                <label for="megjegyzes" class="field-label" data-i18n="form.note">Megjegyzés</label>
+                <textarea id="megjegyzes" name="megjegyzes" rows="4" class="field-input resize-none"
+                          data-i18n-ph="form.notePh" placeholder="Pl. ételérzékenység, különleges alkalom, kérdés…"></textarea>
+                <p class="error-msg" role="alert"></p>
+              </div>
+            </div>
+
+            <button type="submit" id="booking-submit"
+                    class="mt-8 w-full rounded-full bg-forest px-8 py-4 text-sm font-semibold uppercase tracking-widest text-sand-50 transition hover:bg-forest-light disabled:cursor-wait disabled:opacity-70" data-i18n="form.submit">
+              Foglalás elküldése
+            </button>
+          </form>
+
+          <div id="booking-success" class="hidden rounded-3xl bg-sand-50 p-10 text-center text-ink shadow-2xl">
+            <svg class="success-check mx-auto h-20 w-20" viewBox="0 0 52 52" aria-hidden="true">
+              <circle class="check-circle" cx="26" cy="26" r="24" fill="none" />
+              <path class="check-mark" fill="none" d="M14 27l8 8 16-17" />
+            </svg>
+            <h3 class="mt-6 font-serif text-4xl font-semibold" data-i18n="success.title">Köszönjük a foglalását!</h3>
+            <p id="success-summary" class="mx-auto mt-4 max-w-md leading-relaxed text-ink-soft"></p>
+            <p class="mt-4 text-sm text-ink-muted" data-i18n="success.note">Hamarosan e-mailben visszaigazoljuk a részleteket.</p>
+            <button id="new-booking"
+                    class="mt-8 rounded-full border border-forest px-7 py-3 text-sm font-semibold uppercase tracking-widest text-forest transition hover:bg-forest hover:text-sand-50" data-i18n="success.new">
+              Új foglalás
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ KAPCSOLAT ============================ -->
+  <section id="kapcsolat" class="py-24 lg:py-32">
+    <div class="mx-auto max-w-6xl px-6 lg:px-8">
+      <div class="reveal mx-auto max-w-2xl text-center">
+        <p class="section-label" data-i18n="contact.label">Kapcsolat</p>
+        <h2 class="section-title" data-i18n="contact.title">Látogasson el hozzánk</h2>
+        <div class="ornament mx-auto my-7" aria-hidden="true"></div>
+      </div>
+
+      <div class="mt-14 grid gap-10 lg:grid-cols-2">
+        <div class="reveal space-y-8">
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div class="contact-card">
+              <p class="contact-label">
+                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+                </svg>
+                <span data-i18n="contact.addrL">Cím</span>
+              </p>
+              <p class="font-serif text-lg" data-i18n="contact.addr">7025 Bölcske,<br />II. Csordaúti pincesor 10.</p>
+              <p class="mt-1 text-sm text-ink-muted" data-i18n="contact.county">Tolna megye</p>
+            </div>
+            <div class="contact-card">
+              <p class="contact-label">
+                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2Z" />
+                </svg>
+                <span data-i18n="contact.phoneL">Telefon</span>
+              </p>
+              <p class="font-serif text-lg"><a href="tel:+36202193288" class="hover:text-forest">+36 20 219 3288</a></p>
+              <p class="contact-label mt-5">
+                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" />
+                </svg>
+                <span data-i18n="contact.emailL">E-mail</span>
+              </p>
+              <p class="font-serif text-lg"><a href="mailto:amolnar@molnarpince.hu" class="break-all hover:text-forest">amolnar@molnarpince.hu</a></p>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <p class="contact-label">
+              <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" />
+              </svg>
+              <span data-i18n="contact.hoursL">Nyitvatartás</span>
+            </p>
+            <dl class="mt-3 space-y-2 text-ink-soft">
+              <div class="flex justify-between border-b border-sand-200 pb-2">
+                <dt data-i18n="hours.tuefri">Kedd – Péntek</dt><dd class="font-medium text-ink">10:00 – 18:00</dd>
+              </div>
+              <div class="flex justify-between border-b border-sand-200 pb-2">
+                <dt data-i18n="hours.sat">Szombat</dt><dd class="font-medium text-ink">10:00 – 20:00</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt data-i18n="hours.sunmon">Vasárnap – Hétfő</dt><dd class="font-medium text-forest" data-i18n="hours.appt">Előzetes egyeztetéssel</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="map-placeholder flex h-full min-h-[320px] flex-col items-center justify-center rounded-3xl p-10 text-center">
+            <svg class="h-14 w-14 text-forest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+            </svg>
+            <p class="mt-4 font-serif text-xl font-semibold" data-i18n="map.heading">Bölcske, II. Csordaúti pincesor</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=46.7433565%2C18.9615911" target="_blank" rel="noopener"
+               class="mt-6 rounded-full border border-forest px-6 py-2.5 text-xs font-semibold uppercase tracking-widest text-forest transition hover:bg-forest hover:text-sand-50" data-i18n="map.button">
+              Megnyitás térképen
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ LÁBLÉC ============================ -->
+  <footer class="bg-forest-deep py-14 text-sand-300">
+    <div class="mx-auto flex max-w-6xl flex-col items-center gap-5 px-6 text-center lg:px-8">
+      <img src="assets/logo-cream.png" alt="Molnár Borpince" class="w-44" width="520" height="358" />
+      <p class="max-w-md text-sm leading-relaxed" data-i18n="footer.text">
+        Családi borászat a Tolnai borvidéken. A mértékletes borfogyasztás az egészséges életmód része.
+        18 éven aluliaknak alkoholt nem szolgálunk fel.
+      </p>
+      <p class="text-xs text-sand-300/60">© <span id="year"></span> Molnár Borpince, Bölcske · <span data-i18n="footer.rights">Minden jog fenntartva</span></p>
+    </div>
+  </footer>
+
+  <!-- Szkriptek: adatok → fordítások → logika -->
+  <script src="js/wines-data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
