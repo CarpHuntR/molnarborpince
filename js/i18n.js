@@ -62,7 +62,7 @@ const I18N = {
 
     "booking.label": "Élmény", "booking.title": "Borkóstoló<br />foglalás",
     "booking.intro": "Fedezze fel borainkat ott, ahol születnek: a százéves boltíves pincében, gyertyafénynél, házi sajtfalatokkal kísérve. A kóstolókat Molnár Attila személyesen vezeti.",
-    "booking.perk1": "5 tételes vezetett kóstoló (kb. 2 óra)",
+    "booking.perk1": "5 tételes vezetett kóstoló (kb. 3 óra)",
     "booking.perk2": "Házi sajt- és sonkafalatok",
     "booking.perk3": "Pincelátogatás és történetmesélés",
     "form.title": "Foglalja le időpontját",
