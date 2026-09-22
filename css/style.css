@@ -650,7 +650,7 @@ button.rounded-full:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.55rem 0.9rem 0.55rem 0.6rem;
+  padding: 0.55rem 1.6rem;
   border: 1px solid rgba(200, 162, 75, 0.45);
   border-radius: 999px;
   color: var(--sand-200);
@@ -666,9 +666,8 @@ button.rounded-full:focus-visible {
 }
 
 .icp-badge__mark {
-  width: 2.35rem;
-  height: 2.35rem;
-  color: var(--gold-light);
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 .icp-badge__copy {
@@ -676,6 +675,13 @@ button.rounded-full:focus-visible {
   flex-direction: column;
   align-items: flex-start;
   line-height: 1;
+}
+
+.icp-badge__identity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.2rem;
 }
 
 .icp-badge__eyebrow {
