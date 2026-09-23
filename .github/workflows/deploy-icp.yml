@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DFX_WARNING: -mainnet_plaintext_identity
 
     steps:
       - name: Check out repository
