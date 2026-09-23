@@ -25,4 +25,6 @@ jobs:
           dfx identity import github-actions "$RUNNER_TEMP/dfx-identity.pem" --force
 
       - name: Deploy website canister
-        run: dfx deploy website --network ic --identity github-actions --yes
+        run: |
+          dfx canister status website --network ic --identity github-actions
+          dfx deploy website --network ic --identity github-actions --yes --verbose
