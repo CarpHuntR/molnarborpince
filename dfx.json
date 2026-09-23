@@ -1,0 +1,19 @@
+{
+  "canisters": {
+    "website": {
+      "type": "assets",
+      "source": [
+        "."
+      ],
+      "exclude": [
+        ".git",
+        ".dfx",
+        ".github",
+        ".gitignore",
+        "README.md",
+        "dfx.json",
+        "canister_ids.json"
+      ]
+    }
+  }
+}

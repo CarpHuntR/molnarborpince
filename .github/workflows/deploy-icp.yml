@@ -1,0 +1,28 @@
+name: Deploy to Internet Computer
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install dfx
+        uses: dfinity/setup-dfx@main
+
+      - name: Import deploy identity
+        env:
+          DFX_IDENTITY_PEM: ${{ secrets.DFX_IDENTITY_PEM }}
+        shell: bash
+        run: |
+          printf '%s\n' "$DFX_IDENTITY_PEM" > "$RUNNER_TEMP/dfx-identity.pem"
+          dfx identity import github-actions "$RUNNER_TEMP/dfx-identity.pem" --force
+
+      - name: Deploy website canister
+        run: dfx deploy --network ic --identity github-actions --yes

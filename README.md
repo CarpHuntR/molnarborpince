@@ -13,6 +13,21 @@ Nincs szükség build lépésre vagy szerverre: egyszerűen nyisd meg az
 `index.html` fájlt böngészőben. (A Tailwind CDN és a Google Fonts betöltéséhez
 internetkapcsolat szükséges.)
 
+## ICP deploy
+
+Az oldal az Internet Computer assets canisterén futtatható. Helyi deployhoz a
+DFINITY SDK telepítése után futtasd:
+
+```bash
+dfx deploy --network ic
+```
+
+A GitHub Actions workflow minden `main` branch-re érkező push után automatikusan
+deployol. A repository GitHub beállításaiban add hozzá a
+`DFX_IDENTITY_PEM` nevű Actions secretet a deployhoz használt ICP identity
+PEM-tartalmával. Az identity-nek rendelkeznie kell a canister létrehozásához
+vagy frissítéséhez szükséges jogosultsággal és cycle egyenleggel.
+
 ## Fájlstruktúra
 
 ```
