@@ -22,7 +22,7 @@ jobs:
         shell: bash
         run: |
           printf '%s\n' "$DFX_IDENTITY_PEM" > "$RUNNER_TEMP/dfx-identity.pem"
-          dfx identity import github-actions "$RUNNER_TEMP/dfx-identity.pem" --force
+          dfx identity import github-actions "$RUNNER_TEMP/dfx-identity.pem" --force --disable-encryption
 
       - name: Deploy website canister
         run: |
