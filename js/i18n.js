@@ -97,6 +97,7 @@ const I18N = {
 
     "footer.text": "Családi borászat a Tolnai borvidéken. A mértékletes borfogyasztás az egészséges életmód része. 18 éven aluliaknak alkoholt nem szolgálunk fel.",
     "footer.rights": "Minden jog fenntartva",
+    "footer.development": "Fejlesztés alatt! (2026. 09. 30.)",
   },
 
   /* ------------------------------ ENGLISH ----------------------------- */
@@ -174,6 +175,7 @@ const I18N = {
 
     "footer.text": "A family winery in the Tolna wine region. Moderate wine consumption is part of a healthy lifestyle. We do not serve alcohol to anyone under 18.",
     "footer.rights": "All rights reserved",
+    "footer.development": "Under development! (30 September 2026)",
   },
 
   /* ------------------------------ DEUTSCH ----------------------------- */
@@ -251,6 +253,7 @@ const I18N = {
 
     "footer.text": "Ein Familienweingut in der Weinregion Tolna. Maßvoller Weingenuss gehört zu einem gesunden Lebensstil. An Personen unter 18 Jahren schenken wir keinen Alkohol aus.",
     "footer.rights": "Alle Rechte vorbehalten",
+    "footer.development": "In Entwicklung! (30. September 2026)",
   },
 
   /* ------------------------------ FRANÇAIS ---------------------------- */
@@ -328,6 +331,7 @@ const I18N = {
 
     "footer.text": "Un domaine familial dans la région viticole de Tolna. Une consommation modérée de vin fait partie d'un mode de vie sain. Nous ne servons pas d'alcool aux personnes de moins de 18 ans.",
     "footer.rights": "Tous droits réservés",
+    "footer.development": "En cours de développement ! (30 septembre 2026)",
   },
 
   /* ------------------------------ ITALIANO ---------------------------- */
@@ -405,6 +409,7 @@ const I18N = {
 
     "footer.text": "Un'azienda vinicola familiare nella regione di Tolna. Un consumo moderato di vino fa parte di uno stile di vita sano. Non serviamo alcolici ai minori di 18 anni.",
     "footer.rights": "Tutti i diritti riservati",
+    "footer.development": "In fase di sviluppo! (30 settembre 2026)",
   },
 
   /* ----------------------------- SLOVENČINA --------------------------- */
@@ -482,6 +487,7 @@ const I18N = {
 
     "footer.text": "Rodinné vinárstvo vo vinárskej oblasti Tolna. Striedme pitie vína je súčasťou zdravého životného štýlu. Osobám mladším ako 18 rokov alkohol nepodávame.",
     "footer.rights": "Všetky práva vyhradené",
+    "footer.development": "Vo vývoji! (30. septembra 2026)",
   },
 
   /* ------------------------------- POLSKI ----------------------------- */
@@ -559,6 +565,7 @@ const I18N = {
 
     "footer.text": "Rodzinna winnica w regionie winiarskim Tolna. Umiarkowane spożycie wina jest częścią zdrowego stylu życia. Osobom poniżej 18. roku życia nie podajemy alkoholu.",
     "footer.rights": "Wszelkie prawa zastrzeżone",
+    "footer.development": "W budowie! (30 września 2026)",
   },
 
   /* ----------------------------- NEDERLANDS --------------------------- */
@@ -636,5 +643,6 @@ const I18N = {
 
     "footer.text": "Een familiewijngaard in de wijnstreek Tolna. Matig wijngebruik hoort bij een gezonde levensstijl. Aan personen onder de 18 jaar schenken wij geen alcohol.",
     "footer.rights": "Alle rechten voorbehouden",
+    "footer.development": "In ontwikkeling! (30 september 2026)",
   },
 };
